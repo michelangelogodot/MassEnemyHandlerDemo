@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu2mk4a2tyiek"]
+
+[ext_resource type="Script" uid="uid://dvk0ul38ofgwo" path="res://MassEnemySystem.cs" id="1_abvsa"]
+
+[node name="MassEnemySystem" type="MultiMeshInstance2D"]
+physics_interpolation_mode = 1
+script = ExtResource("1_abvsa")

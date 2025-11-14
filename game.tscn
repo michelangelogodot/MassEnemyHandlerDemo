@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://bgf8h7fygpwre"]
+
+[ext_resource type="PackedScene" uid="uid://bu2mk4a2tyiek" path="res://MassEnemySystem.tscn" id="1_80nbo"]
+[ext_resource type="Texture2D" uid="uid://drs1pej5nu0ec" path="res://texture_08.png" id="2_e2o6t"]
+[ext_resource type="Script" uid="uid://bccmb5jwme31j" path="res://Cursor.cs" id="3_feb5d"]
+[ext_resource type="Script" uid="uid://bpsdtnimbh0gq" path="res://MoneyShower.cs" id="4_fc0e3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_feb5d"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_0e48y"]
+sky_material = SubResource("ProceduralSkyMaterial_feb5d")
+
+[sub_resource type="Environment" id="Environment_fc0e3"]
+background_mode = 3
+sky = SubResource("Sky_0e48y")
+tonemap_mode = 2
+glow_enabled = true
+glow_bloom = 0.07
+
+[sub_resource type="BoxMesh" id="BoxMesh_fc0e3"]
+size = Vector3(200, 200, 200)
+
+[node name="Game" type="Node2D"]
+
+[node name="MassEnemySystem" parent="." instance=ExtResource("1_80nbo")]
+
+[node name="Background" type="Polygon2D" parent="."]
+show_behind_parent = true
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("2_e2o6t")
+texture_scale = Vector2(8.915, 8.915)
+polygon = PackedVector2Array(-1412, -1137, 1444, -1021, 2043, 1154, -1045, 1254, -1704, 648)
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_fc0e3")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(0, -37)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Cursor" type="MeshInstance2D" parent="." node_paths=PackedStringArray("EnemySystem", "Camera")]
+modulate = Color(1, 1, 1, 0.09803922)
+mesh = SubResource("BoxMesh_fc0e3")
+script = ExtResource("3_feb5d")
+EnemySystem = NodePath("../MassEnemySystem")
+Camera = NodePath("../Camera")
+
+[node name="Money" type="VBoxContainer" parent="." node_paths=PackedStringArray("EnemySystem")]
+offset_left = -679.0
+offset_top = -413.0
+offset_right = -545.0
+offset_bottom = -120.0
+script = ExtResource("4_fc0e3")
+EnemySystem = NodePath("../MassEnemySystem")
